@@ -71,12 +71,17 @@
         padding: 4rem 0;
         text-align: center;
         color: white;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 20px;
+        margin: 2rem 0;
     }
 
     .hero h1 {
         font-size: 3.5rem;
         margin-bottom: 1rem;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+        color: white;
+        font-weight: bold;
     }
 
     .hero p {
@@ -85,7 +90,9 @@
         max-width: 600px;
         margin-left: auto;
         margin-right: auto;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        color: white;
+        font-weight: 500;
     }
 
     .cta-button {
@@ -200,11 +207,29 @@
         border-radius: 5px;
         font-size: 0.9rem;
         font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .tab:hover {
+        background: #dee2e6;
     }
 
     .tab.active {
         background: #0066CC;
         color: white;
+    }
+
+    .popup-content {
+        min-height: 200px;
+    }
+
+    .tab-content {
+        display: none;
+    }
+
+    .tab-content.active {
+        display: block;
     }
 
     .case-study {
@@ -364,23 +389,55 @@
             
             <div id="demo-popup" class="demo-popup" style="display: none; max-width: 500px; margin: 0 auto;">
                 <div class="popup-tabs">
-                    <span class="tab active">Overview</span>
-                    <span class="tab">Specifications</span>
-                    <span class="tab">Pricing</span>
-                    <span class="tab">Applications</span>
+                    <span class="tab active" onclick="showTab('overview')">Overview</span>
+                    <span class="tab" onclick="showTab('specifications')">Specifications</span>
+                    <span class="tab" onclick="showTab('pricing')">Pricing</span>
+                    <span class="tab" onclick="showTab('applications')">Applications</span>
                 </div>
                 <div class="popup-content">
-                    <h4>NAPA Ceramic Brake Pads (NWP-B4C)</h4>
-                    <p><strong>Premium ceramic brake pads</strong> designed for excellent stopping power and reduced brake dust. Perfect for daily driving and light commercial applications.</p>
-                    <p><strong>Key Benefits:</strong></p>
-                    <ul style="text-align: left; margin: 1rem 0;">
-                        <li>Low noise operation</li>
-                        <li>Extended pad life</li>
-                        <li>Reduced wheel dust</li>
-                        <li>Consistent performance</li>
-                    </ul>
-                    <p><strong>Fits:</strong> Ford Ranger 2019-2024, Mazda BT-50 2020-2024</p>
-                    <p><strong>Stock:</strong> ✅ In stock - Same day dispatch</p>
+                    <div id="overview" class="tab-content active">
+                        <h4>NAPA Ceramic Brake Pads (NWP-B4C)</h4>
+                        <p><strong>Premium ceramic brake pads</strong> designed for excellent stopping power and reduced brake dust. Perfect for daily driving and light commercial applications.</p>
+                        <p><strong>Key Benefits:</strong></p>
+                        <ul style="text-align: left; margin: 1rem 0;">
+                            <li>Low noise operation</li>
+                            <li>Extended pad life</li>
+                            <li>Reduced wheel dust</li>
+                            <li>Consistent performance</li>
+                        </ul>
+                    </div>
+                    <div id="specifications" class="tab-content">
+                        <h4>Technical Specifications</h4>
+                        <p><strong>Material:</strong> Ceramic composite</p>
+                        <p><strong>Operating Temperature:</strong> -40°C to +650°C</p>
+                        <p><strong>Friction Coefficient:</strong> 0.35-0.45</p>
+                        <p><strong>Thickness:</strong> 12.5mm</p>
+                        <p><strong>Width:</strong> 63.2mm</p>
+                        <p><strong>Height:</strong> 58.1mm</p>
+                        <p><strong>Certification:</strong> ECE R90 approved</p>
+                    </div>
+                    <div id="pricing" class="tab-content">
+                        <h4>Pricing & Availability</h4>
+                        <p><strong>Alliance AMS Price:</strong> $89.95</p>
+                        <p><strong>RRP:</strong> $129.95</p>
+                        <p><strong>You Save:</strong> $40.00 (31%)</p>
+                        <p><strong>Stock Status:</strong> ✅ In stock</p>
+                        <p><strong>Dispatch:</strong> Same day (orders before 3pm)</p>
+                        <p><strong>Delivery:</strong> Perth metro 1-2 days</p>
+                        <p><strong>Warranty:</strong> 24 months / 40,000km</p>
+                    </div>
+                    <div id="applications" class="tab-content">
+                        <h4>Vehicle Applications</h4>
+                        <p><strong>Fits These Vehicles:</strong></p>
+                        <ul style="text-align: left; margin: 1rem 0;">
+                            <li>Ford Ranger PX/PX2/PX3 (2012-2024)</li>
+                            <li>Mazda BT-50 UP/UR/TF (2011-2024)</li>
+                            <li>Isuzu D-Max (2012-2020)</li>
+                        </ul>
+                        <p><strong>Installation Notes:</strong></p>
+                        <p>Professional installation recommended. Bedding-in procedure required for optimal performance. Check rotor condition before installation.</p>
+                        <p><strong>Perfect for:</strong> Daily driving, light towing, mining conditions</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -541,6 +598,26 @@
         } else {
             popup.style.display = 'none';
         }
+    }
+
+    function showTab(tabName) {
+        // Hide all tab contents
+        const tabContents = document.querySelectorAll('.tab-content');
+        tabContents.forEach(content => {
+            content.classList.remove('active');
+        });
+        
+        // Remove active class from all tabs
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => {
+            tab.classList.remove('active');
+        });
+        
+        // Show selected tab content
+        document.getElementById(tabName).classList.add('active');
+        
+        // Add active class to clicked tab
+        event.target.classList.add('active');
     }
 
     // Smooth scrolling for navigation links
